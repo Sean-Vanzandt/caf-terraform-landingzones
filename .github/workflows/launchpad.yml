@@ -41,5 +41,8 @@ jobs:
 
       - name: Launchpad
         run: |
-          /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource plan -var-file=${GITHUB_WORKSPACE}/
-          /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource apply -var-file=${GITHUB_WORKSPACE}/
+          /tf/rover/rover.sh -lz /tf/caf/landingzones/caf_launchpad \
+            -launchpad \
+            -var-folder /tf/caf/landingzones/caf_launchpad/scenario/100 \
+            -parallelism=30 \
+            -a apply
