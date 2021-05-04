@@ -54,7 +54,7 @@ jobs:
       - name: launchpad
 #        if: ${{ github.event.inputs.confirm == 'yes' }}
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_launchpad -a apply \
             -var-folder ${GITHUB_WORKSPACE}/configs/launchpad \
             -level level0 \
             -launchpad \
@@ -64,7 +64,7 @@ jobs:
       - name: foundations
 #        if: ${{ github.event.inputs.confirm == 'yes' }}
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_foundations -a apply \
             -level level1 \
             -parallelism=30 \
             --environment ${{ env.ALZ_NAME }}
