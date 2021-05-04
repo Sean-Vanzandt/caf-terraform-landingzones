@@ -1,0 +1,48 @@
+name: landingzones
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Secret to Deploy Launchpad? Use lower case (no, yes)"
+        default: "no"
+
+env:
+  TF_CLI_ARGS: '-no-color'
+  TF_CLI_ARGS_destroy: '-auto-approve -refresh=false'
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  TFVARS_PATH: '/tf/caf/environments'
+
+jobs:
+  level0:
+    name: level0
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        region: ["westus2"]
+        convention: ["random", "cafrandom"]
+    
+    container:
+      image: aztfmod/rover:2005.1510
+      options: --user 0
+
+    steps:
+      - name: Login Azure
+        run: |
+          az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
+          az account set -s ${{ ARM_SUBSCRIPTION_ID }}
+
+          echo "local user: $(whoami)"
+
+      - name: Locate launchpad
+        run: |
+          id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.workspace=='level0']" -o json | jq -r .[0].id)
+            if [ "${id}" == "null" ]; then
+              /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource plan -var location=${{ matrix.region }}
+              /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource apply -var location=${{ matrix.region }}
+            fi
