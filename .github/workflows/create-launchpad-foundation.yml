@@ -52,12 +52,19 @@ jobs:
           echo "set subscription to ${{ env.ARM_SUBSCRIPTION_ID }} "
           echo "local user: $(whoami)"
       - name: launchpad
-#        if: ${{ github.event.inputs.confirm == 'yes' }}
+        if: ${{ github.event.inputs.confirm == 'yes' }}
         run: |
-          /tf/rover/rover.sh -lz /tf/caf/caf_launchpad -a apply \
-            -var-folder /tf/caf/configs/launchpad \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/tf/caf/caf_launchpad -a apply \
+            -var-folder ${GITHUB_WORKSPACE}/configs/launchpad \
             -level level0 \
             -launchpad \
             -parallelism=30 \
             --environment ${{ env.ALZ_NAME }} \
             -var prefix=""
+      - name: foundations
+        if: ${{ github.event.inputs.confirm == 'yes' }}
+        run: |
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/tf/caf/caf_foundations -a apply \
+            -level level1 \
+            -parallelism=30 \
+            --environment ${{ env.ALZ_NAME }}
