@@ -43,6 +43,6 @@ jobs:
         run: |
           id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.workspace=='level0']" -o json | jq -r .[0].id)
             if [ "${id}" == "null" ]; then
-              /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource plan -var-folder=${GITHUB_WORKSPACE}/caf_launchpad
-              /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource apply -var-folder=${GITHUB_WORKSPACE}/caf_launchpad
+              /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource plan -var-file=${GITHUB_WORKSPACE}/caf_launchpad/scenario/100/storage_accounts.tfvars
+              /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource apply -var-file=${GITHUB_WORKSPACE}/caf_launchpad/scenario/100/storage_accounts.tfvars
             fi
