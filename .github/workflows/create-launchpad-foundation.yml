@@ -54,6 +54,7 @@ jobs:
       - name: launchpad
 #        if: ${{ github.event.inputs.confirm == 'yes' }}
         run: |
+          pwd
           ls -l
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/tf/caf/caf_launchpad -a apply \
             -var-folder ${GITHUB_WORKSPACE}/configs/launchpad \
