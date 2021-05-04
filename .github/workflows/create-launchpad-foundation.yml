@@ -27,7 +27,7 @@ env:
   ROVER_RUNNER: true
 
 jobs:
-  salz-foundations:
+  alz-foundations:
     name: foundations
     runs-on: ubuntu-latest
 
@@ -45,14 +45,14 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Login azure
-        if: ${{ github.event.inputs.confirm == 'yes' }}
+#        if: ${{ github.event.inputs.confirm == 'yes' }}
         run: |
           az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
           az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
           echo "set subscription to ${{ env.ARM_SUBSCRIPTION_ID }} "
           echo "local user: $(whoami)"
       - name: launchpad
-        if: ${{ github.event.inputs.confirm == 'yes' }}
+#        if: ${{ github.event.inputs.confirm == 'yes' }}
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad -a apply \
             -var-folder ${GITHUB_WORKSPACE}/configs/launchpad \
@@ -62,7 +62,7 @@ jobs:
             --environment ${{ env.ALZ_NAME }} \
             -var prefix=""
       - name: foundations
-        if: ${{ github.event.inputs.confirm == 'yes' }}
+#        if: ${{ github.event.inputs.confirm == 'yes' }}
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a apply \
             -level level1 \
