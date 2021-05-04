@@ -48,6 +48,6 @@ jobs:
                 -level level0 \
                 -launchpad \
                 -parallelism=30 \
-                --environment '${{ env.ALZ_NAME }}' \
-                -var prefix="${GITHUB_WORKSPACE"
+                --environment ${{ env.ALZ_NAME }} \
+                -var prefix="${GITHUB_WORKSPACE}"
             fi
