@@ -44,5 +44,6 @@ jobs:
           /tf/rover/rover.sh -lz /tf/caf/landingzones/caf_launchpad \
             -launchpad \
             -var-folder /tf/caf/landingzones/caf_launchpad/scenario/100 \
+            -level level0 \
             -parallelism=30 \
             -a apply
