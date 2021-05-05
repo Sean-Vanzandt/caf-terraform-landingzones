@@ -41,9 +41,9 @@ jobs:
 
       - name: Launchpad
         run: |
-          /tf/rover/rover.sh -lz /tf/caf/landingzones/caf_launchpad \
+          /tf/rover/rover.sh -lz /tf/caf/caf_launchpad \
             -launchpad \
-            -var-folder /tf/caf/landingzones/caf_launchpad/scenario/100 \
+            -var-folder /tf/caf/caf_launchpad/scenario/100 \
             -level level0 \
             -parallelism=30 \
             -a apply
