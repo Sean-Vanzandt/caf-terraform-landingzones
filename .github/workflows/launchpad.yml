@@ -41,7 +41,7 @@ jobs:
 
       - name: Launchpad
         run: |
-          /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource plan location=${{ matrix.region }}
+#          /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource plan location=${{ matrix.region }}
           /tf/rover/rover.sh -lz /tf/caf/landingzones/caf_launchpad \
             -launchpad \
             -var-folder /tf/caf/landingzones/caf_launchpad/scenario/100 \
